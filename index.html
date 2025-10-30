@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Numaish LED Advertisement Calculator</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" />
+    <style>
+        body {
+            background: linear-gradient(135deg, #174B88 0%, #7ecffe 100%);
+            min-height: 100vh;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            color: #1f2e2b;
+        }
+        
+        .main-box {
+            max-width: 420px;
+            margin: 46px auto;
+            background: #fff;
+            border-radius: 16px;
+            box-shadow: 0 4px 24px #174b8827;
+            overflow: hidden;
+            border-top: 7px solid #4080D0;
+            border-bottom: 2px solid #6ec2ff;
+        }
+        
+        .box-header {
+            background: #003366;
+            color: #fff;
+            text-align: center;
+            padding: 22px 10px 10px 10px;
+            border-bottom: 2px solid #6ec2ff;
+        }
+        
+        .box-header img {
+            max-width: 140px;
+            margin-bottom: 10px;
+            border-radius: 7px;
+            background: #fff;
+            padding: 3px;
+        }
+        
+        .box-header h3 {
+            font-size: 1.28rem;
+            font-weight: 800;
+            letter-spacing: 0.04em;
+            margin-bottom: 2px;
+        }
+        
+        .box-header p {
+            font-size: 0.93rem;
+            margin-bottom: 0;
+            opacity: 0.88;
+            font-weight: 500;
+            letter-spacing: 0.02em;
+        }
+        
+        .box-body {
+            padding: 19px 15px 18px 15px;
+            background: #e8f5ff;
+        }
+        
+        .screen-select-card {
+            padding: 13px;
+            background: #f2f7fd;
+            border: 1.2px solid #bdd9ed;
+            border-radius: 11px;
+            margin-bottom: 14px;
+            box-shadow: 0 1px 9px #1aa96f11;
+        }
+        
+        .screen-title {
+            font-weight: 700;
+            color: #174b88;
+            font-size: 1.05rem;
+            margin-bottom: 10px;
+            letter-spacing: 0.02em;
+        }
+        
+        .screen-option {
+            margin-bottom: 7px;
+            padding-left: 1px;
+            display: flex;
+            align-items: flex-start;
+            gap: 7px;
+        }
+        
+        .form-check-input {
+            margin-top: 5px;
+            border-radius: 4px;
+            border-color: #6ec4ff;
+        }
+        
+        .form-check-input:checked {
+            background-color: #174B88;
+            border-color: #174B88;
+            box-shadow: 0 0 10px #7ecffe1b;
+        }
+        
+        .screen-label {
+            font-weight: 600;
+            color: #184869;
+            font-size: 1.02rem;
+            letter-spacing: 0.01em;
+        }
+        
+        .screen-price {
+            font-size: 0.83rem;
+            color: #4080D0;
+            margin-left: 3px;
+            font-weight: 500;
+            letter-spacing: 0.01em;
+        }
+        
+        label {
+            font-weight: 700;
+            color: #174b88;
+            font-size: 0.97rem;
+            display: inline-block;
+            margin-bottom: 2px;
+        }
+        
+        .form-control {
+            border-radius: 7px;
+            font-size: 0.96rem;
+            background: #f6fafc;
+            border: 1.1px solid #b8d7ef;
+            color: #184869;
+            margin-bottom: 7px;
+            transition: border-color 0.25s;
+            height: 37px;
+            padding-left: 10px;
+        }
+        
+        .form-control:focus {
+            border-color: #4080D0;
+            background: #fff;
+            outline: none;
+            box-shadow: 0 0 7px #7ecffe8b;
+        }
+        
+        .calc-results {
+            background: #f0f6ff;
+            border: 1.4px solid #9ad2fc;
+            border-radius: 9px;
+            padding: 17px 13px 11px 13px;
+            margin-top: 15px;
+            font-size: 1.06rem;
+            color: #184869;
+            font-weight: 500;
+            box-shadow: 0 0 0.5rem #4080D00b;
+        }
+        
+        .calc-results .calc-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 7px;
+            font-size: 1.04em;
+        }
+        
+        .calc-results .calc-label {
+            font-weight: 600;
+            color: #174b88;
+            letter-spacing: 0.01em;
+        }
+        
+        .calc-results .calc-value {
+            color: #174B88;
+            font-weight: 700;
+            min-width: 62px;
+            text-align: right;
+        }
+        
+        .summary-line {
+            margin-top: 17px;
+            font-size: 1rem;
+            text-align: center;
+            background: linear-gradient(80deg, #174b88 70%, #7ecffe 110%);
+            color: #fff;
+            padding: 10px 7px;
+            border-radius: 6px;
+            font-weight: 700;
+            letter-spacing: 0.01em;
+            box-shadow: 0 2px 10px #174b8822;
+        }
+        
+        .screen-list {
+            margin-top: 7px;
+            font-size: 0.98em;
+            color: #4080D0;
+            font-weight: 600;
+            letter-spacing: 0.01em;
+            word-spacing: 0.09em;
+        }
+        
+        @media (max-width: 550px) {
+            .main-box {
+                max-width: 98vw;
+                margin-top: 28px;
+            }
+            .box-header {
+                padding: 13px 3vw 7px 3vw;
+            }
+            .box-body {
+                padding: 8px 4vw 11px 4vw;
+            }
+            .calc-results {
+                font-size: 0.98rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="main-box">
+        <div class="box-header">
+            <img src="admore logo WITHOUT BRANDING.png" alt="Logo" />
+            <h3>LED Advertisement Calculator</h3>
+            <p>Numaish Exhibition | Admore</p>
+        </div>
+        <div class="box-body">
+            <form id="adCalcForm" autocomplete="off">
+                <div class="screen-select-card">
+                    <div class="screen-title">Select LED Screens</div>
+                    <div class="screen-option form-check">
+                        <input class="form-check-input" type="checkbox" id="screenPH" value="Pista House" data-price="10">
+                        <label class="screen-label form-check-label" for="screenPH">Pista House</label>
+                        <span class="screen-price">₹10/sec</span>
+                    </div>
+                    <div class="screen-option form-check">
+                        <input class="form-check-input" type="checkbox" id="screenGS" value="Gandhi Statue" data-price="8">
+                        <label class="screen-label form-check-label" for="screenGS">Gandhi Statue</label>
+                        <span class="screen-price">₹8/sec</span>
+                    </div>
+                    <div class="screen-option form-check">
+                        <input class="form-check-input" type="checkbox" id="screenAG" value="Ajanta Gate" data-price="8">
+                        <label class="screen-label form-check-label" for="screenAG">Ajanta Gate</label>
+                        <span class="screen-price">₹8/sec</span>
+                    </div>
+                    <div class="screen-option form-check">
+                        <input class="form-check-input" type="checkbox" id="screenEG" value="Ellora Gate" data-price="8">
+                        <label class="screen-label form-check-label" for="screenEG">Ellora Gate</label>
+                        <span class="screen-price">₹8/sec</span>
+                    </div>
+                </div>
+                <div class="mb-2">
+                    <label for="packageName">Package Name</label>
+                    <input type="text" class="form-control" id="packageName" placeholder="e.g. Bronze Value" value="Bronze Value" />
+                </div>
+                <div class="row mb-2">
+                    <div class="col-6">
+                        <label for="days">Days</label>
+                        <input type="number" class="form-control" id="days" min="1" value="1" />
+                    </div>
+                    <div class="col-6">
+                        <label for="numLEDs">No. of LEDs <span class="text-muted">(per screen)</span></label>
+                        <input type="number" class="form-control" id="numLEDs" min="1" value="1" />
+                    </div>
+                </div>
+                <div class="row mb-2">
+                    <div class="col-6">
+                        <label for="adSeconds">Ad Seconds</label>
+                        <input type="number" class="form-control" id="adSeconds" min="1" value="5" />
+                    </div>
+                    <div class="col-6">
+                        <label for="repetitions">Repetitions</label>
+                        <input type="number" class="form-control" id="repetitions" min="1" value="10" />
+                    </div>
+                </div>
+                <div class="row mb-2">
+                    <div class="col-6">
+                        <label for="gst">GST (%)</label>
+                        <input type="number" class="form-control" id="gst" min="18" max="18" value="18" />
+                    </div>
+                </div>
+            </form>
+            <div class="screen-list" id="screenList">
+                Selected screens: <span id="selectedScreenNames">Pista House</span>
+            </div>
+            <div class="calc-results" aria-live="polite">
+                <div class="calc-item"><span class="calc-label">Total Seconds</span><span class="calc-value" id="totalSeconds">50</span></div>
+                <div class="calc-item"><span class="calc-label">Total Overall Seconds</span><span class="calc-value" id="totalOverallSeconds">500</span></div>
+                <div class="calc-item"><span class="calc-label">Total Charges (₹)</span><span class="calc-value" id="totalCharges">5000</span></div>
+                <div class="calc-item"><span class="calc-label">GST (<span id="gstPercentDisp">18</span>%)</span><span class="calc-value" id="gstValue">900</span></div>
+                <div class="calc-item"><span class="calc-label">Total Payable (₹)</span><span class="calc-value" id="totalPayable">5900</span></div>
+            </div>
+            <div class="summary-line" id="summaryLine" aria-live="polite">
+                5 Seconds Ad, will be Repeated 10 Times every day for 1 Days on 1 LED(s) [Pista House] Total Charge of Rs. 5000 + 18% GST (Bronze Value)
+            </div>
+        </div>
+    </div>
+    <script>
+        // IDs of checkbox inputs and price mapping
+        const screenIds = [{
+            id: 'screenPH',
+            label: 'Pista House',
+            price: 10
+        }, {
+            id: 'screenGS',
+            label: 'Gandhi Statue',
+            price: 8
+        }, {
+            id: 'screenAG',
+            label: 'Ajanta Gate',
+            price: 8
+        }, {
+            id: 'screenEG',
+            label: 'Ellora Gate',
+            price: 8
+        }];
+
+        function getSelectedScreens() {
+            let screens = [];
+            for (const scr of screenIds) {
+                let el = document.getElementById(scr.id);
+                if (el && el.checked) screens.push(scr);
+            }
+            return screens;
+        }
+
+        function updateScreenList() {
+            const selectedScreens = getSelectedScreens();
+            document.getElementById('selectedScreenNames').textContent = selectedScreens.length > 0 ?
+                selectedScreens.map(s => s.label).join(', ') :
+                'None';
+        }
+
+        function calculate() {
+            const days = parseInt(document.getElementById('days').value, 10) || 0;
+            const numLEDs = parseInt(document.getElementById('numLEDs').value, 10) || 0;
+            const adSeconds = parseInt(document.getElementById('adSeconds').value, 10) || 0;
+            const repetitions = parseInt(document.getElementById('repetitions').value, 10) || 0;
+            const gstPercent = parseFloat(document.getElementById('gst').value) || 0;
+            const packageName = document.getElementById('packageName').value.trim();
+            const selectedScreens = getSelectedScreens();
+
+            const totalSeconds = adSeconds * repetitions;
+            let totalOverallSeconds = 0;
+            let totalCharges = 0;
+            for (const screen of selectedScreens) {
+                const overallSec = totalSeconds * days * numLEDs;
+                totalOverallSeconds += overallSec;
+                totalCharges += overallSec * screen.price;
+            }
+            totalCharges = Math.round(totalCharges);
+            const gstValue = Math.round((totalCharges * gstPercent) / 100);
+            const totalPayable = totalCharges + gstValue;
+
+            document.getElementById('totalSeconds').textContent = totalSeconds;
+            document.getElementById('totalOverallSeconds').textContent = totalOverallSeconds;
+            document.getElementById('totalCharges').textContent = totalCharges.toLocaleString();
+            document.getElementById('gstPercentDisp').textContent = gstPercent;
+            document.getElementById('gstValue').textContent = gstValue.toLocaleString();
+            document.getElementById('totalPayable').textContent = totalPayable.toLocaleString();
+            updateScreenList();
+            const screenList = selectedScreens.length > 0 ? selectedScreens.map(s => s.label).join(', ') : 'None';
+            const ledDesc = selectedScreens.length > 1 ? `${numLEDs} LED(s) each` : `${numLEDs} LED(s)`;
+            const summary = `${adSeconds} Seconds Ad, will be Repeated ${repetitions} Times every day for ${days} Days on ${ledDesc} [${screenList}] Total Charge of Rs. ${totalCharges.toLocaleString()} + ${gstPercent}% GST${packageName ? ' (' + packageName + ')' : ''}`;
+            document.getElementById('summaryLine').textContent = summary;
+        }
+
+        // Attach events to all checkboxes and inputs
+        screenIds.forEach(scr => {
+            document.getElementById(scr.id).addEventListener('change', calculate);
+        });
+        document.getElementById('adCalcForm').addEventListener('input', calculate);
+        window.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('screenPH').checked = true;
+            calculate();
+        });
+    </script>
+</body>
+
+</html>
